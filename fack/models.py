@@ -21,6 +21,7 @@ class Topic(models.Model):
     Generic Topics for FAQ question grouping
     """
     name = models.CharField(_('name'), max_length=150)
+    meta_desc = models.TextField(_('meta desc'), blank=True, help_text=_('The SEO meta description.'))
     slug = models.SlugField(_('slug'), max_length=150)
     sort_order = models.IntegerField(_('sort order'), default=0,
         help_text=_('The order you would like the topic to be displayed.'))
@@ -50,8 +51,9 @@ class Question(models.Model):
     )
 
     text = models.TextField(_('question'), help_text=_('The actual question itself.'))
+    excerpt = models.TextField(_('excerpt'), blank=True, help_text=_('The answer excerpt text.'))
     answer = models.TextField(_('answer'), blank=True, help_text=_('The answer text.'))
-    topic = models.ForeignKey(Topic, verbose_name=_('topic'), related_name='questions')
+    topic = models.ForeignKey(Topic, verbose_name=_('topic'), related_name='questions', on_delete=models.PROTECT)
     slug = models.SlugField(_('slug'), max_length=100)
     status = models.IntegerField(_('status'),
         choices=STATUS_CHOICES, default=INACTIVE,
@@ -68,9 +70,9 @@ class Question(models.Model):
     created_on = models.DateTimeField(_('created on'), default=datetime.datetime.now)
     updated_on = models.DateTimeField(_('updated on'))
     created_by = models.ForeignKey(AUTH_USER_MODEL, verbose_name=_('created by'),
-        null=True, related_name="+")
+        null=True, related_name="+", on_delete=models.PROTECT)
     updated_by = models.ForeignKey(AUTH_USER_MODEL, verbose_name=_('updated by'),
-        null=True, related_name="+")
+        null=True, related_name="+", on_delete=models.PROTECT)
 
     if django.VERSION >= (1, 7):
         objects = QuestionQuerySet.as_manager()

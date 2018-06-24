@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('sort_order', models.IntegerField(default=0, help_text='The order you would like the question to be displayed.', verbose_name='sort order')),
                 ('created_on', models.DateTimeField(default=datetime.datetime.now, verbose_name='created on')),
                 ('updated_on', models.DateTimeField(verbose_name='updated on')),
-                ('created_by', models.ForeignKey(to=settings.AUTH_USER_MODEL, verbose_name='created by', related_name='+', null=True)),
+                ('created_by', models.ForeignKey(to=settings.AUTH_USER_MODEL, verbose_name='created by', related_name='+', null=True, on_delete=models.PROTECT)),
             ],
             options={
                 'verbose_name_plural': 'Frequently asked questions',
@@ -50,11 +50,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='question',
             name='topic',
-            field=models.ForeignKey(to='fack.Topic', verbose_name='topic', related_name='questions'),
+            field=models.ForeignKey(to='fack.Topic', verbose_name='topic', related_name='questions', on_delete=models.PROTECT),
         ),
         migrations.AddField(
             model_name='question',
             name='updated_by',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL, verbose_name='updated by', related_name='+', null=True),
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL, verbose_name='updated by', related_name='+', null=True, on_delete=models.PROTECT),
         ),
     ]
