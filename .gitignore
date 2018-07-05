@@ -2,6 +2,7 @@
 *.bak
 *.db
 *.egg-info
+*.iml
 .tox/
 .coverage
 htmlcov/
