@@ -34,7 +34,6 @@ class Topic(models.Model):
     def __str__(self):
         return self.name
 
-    @models.permalink
     def get_absolute_url(self):
         return ('faq_topic_detail', [self.slug])
 
@@ -87,7 +86,6 @@ class Question(models.Model):
     def __str__(self):
         return self.text
 
-    @models.permalink
     def get_absolute_url(self):
         return ('faq_question_detail', [self.topic.slug, self.slug])
 
