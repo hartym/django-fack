@@ -5,6 +5,7 @@ import datetime
 import django
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import slugify
 from django.utils.encoding import python_2_unicode_compatible
@@ -35,7 +36,7 @@ class Topic(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return ('faq_topic_detail', [self.slug])
+        return reverse('faq_topic_detail', kwargs={'slug': self.slug})
 
 
 @python_2_unicode_compatible
@@ -87,7 +88,7 @@ class Question(models.Model):
         return self.text
 
     def get_absolute_url(self):
-        return ('faq_question_detail', [self.topic.slug, self.slug])
+        return reverse('faq_question_detail', kwargs={'topic_slug': self.topic.slug, 'slug': self.slug})
 
     def save(self, *args, **kwargs):
         # Set the date updated.
